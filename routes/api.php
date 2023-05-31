@@ -2,7 +2,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,3 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+//Route::middleware('auth:sanctum')->group(function (){
+    Route::post('/url', 'App\Http\Controllers\UrlController@CreateHashUrl');
+    Route::get('/url-data/{hash}', 'App\Http\Controllers\UrlController@GetHashedUrlData');
+//});
