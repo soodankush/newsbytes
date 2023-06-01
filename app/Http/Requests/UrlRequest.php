@@ -24,7 +24,8 @@ class UrlRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'long_url' => 'required|url',
+            'long_url'  => 'required|url',
+            'single_use'=> 'required|boolean'
         ];
     }
 
@@ -33,6 +34,8 @@ class UrlRequest extends FormRequest
         return [
             'long_url.required' => 'Please enter long url',
             'long_url.url'      => 'Please enter valid URL',
+            'single_use.required' => 'Mention if the URL is single use or not',
+            'single_use.boolean'      => 'Please mention true/false',
         ];
     }
 

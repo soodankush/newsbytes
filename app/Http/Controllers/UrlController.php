@@ -17,7 +17,7 @@ class UrlController extends Controller
      */
     private function IsUrlSingleUse(Url $urlData): bool
     {
-        return ($urlData->single_use === 1 && $urlData->click_counts === 1);
+        return ($urlData->single_use === 1 && $urlData->click_counts >= 1);
     }
 
     /**
@@ -37,13 +37,14 @@ class UrlController extends Controller
             if($checkIfHashAlreadyExists) {
                 return response()->json([
                     'success'       => false,
-                    'hashed_url'    => $hashedUrl,
+                    'hashed_url'    => url($hashedUrl),
                     'message'       => 'Hashed URL exists already',
                 ], 400);
             }
             $urlData = Url::create([
                 'hashed_url'    => $hashedUrl,
                 'long_url'      => $urlRequestData['long_url'],
+                'single_use'    => $urlRequestData['single_use'],
                 'click_counts'  => 0,
             ]);
 
@@ -105,7 +106,7 @@ class UrlController extends Controller
     {
         \Log::info('In ' . __METHOD__);
         $findHashedUrlData = Url::where('hashed_url', $hashedUrl)->first();
-//        dd($findHashedUrlData);
+
         if($findHashedUrlData) {
 
             return response()->json([
@@ -118,7 +119,7 @@ class UrlController extends Controller
             return response()->json([
                 'success'   => false,
                 'message'   => 'No data found for ' . url($hashedUrl),
-            ], 400);
+            ], 404);
         }
     }
 }
