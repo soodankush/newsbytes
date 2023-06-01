@@ -6,7 +6,8 @@
 - Install git and composer on the system.
 - Clone the git repository in the /var/www/html
 - Run ```composer install```
-- Update the .env files with the necessary environmental variables.
+- Copy the .env.example to .env files and update the .env files with the necessary environmental variables.
+- Run migrations using command ```php artisan migrate```
 - Run ```php artisan config:cache```
 - Create a virtualhost and point it to the public folder of the project repository.
 
